@@ -56,3 +56,5 @@ migration:
 ## 의존성 갱신
 
 Renovate가 PR을 연다(자동 병합 없음). `.github/workflows/build.yaml`의 `app-build-vX.Y.Z` 태그도 Renovate가 올린다. 태그 대신 SHA로 바꾸지 않는다(파일 주석).
+
+<!-- T13 시나리오 1: 두 번째 커밋(자동 배포 PR 확인용) -->
