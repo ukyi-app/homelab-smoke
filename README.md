@@ -62,3 +62,5 @@ Renovate가 PR을 연다(자동 병합 없음). `.github/workflows/build.yaml`�
 T13 시나리오 11 두 번째 시도: 이 커밋(A2)은 표식 파일이 남아 있어 빌드가 150초 늦다.
 
 T13 시나리오 7: Infisical 인증 장애 중에 이미지만 바꾸는 배포.
+
+<!-- T17 fork PR 시험(리뷰 봇이 fork PR을 모델 호출 전에 막는지). 병합하지 않는다. -->
