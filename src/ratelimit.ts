@@ -3,6 +3,8 @@ const lastSeen = new Map<string, number>();
 
 export function allow(ip: string, now = Date.now()): boolean {
   const prev = lastSeen.get(ip) ?? 0;
+  // 허용한 요청만 기록한다. 거절까지 기록하면 자주 오는 클라이언트의 창이 계속 밀린다.
+  if (now - prev <= 1000) return false;
   lastSeen.set(ip, now);
-  return now - prev > 1000;
+  return true;
 }
