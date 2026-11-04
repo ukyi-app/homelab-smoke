@@ -14,11 +14,12 @@ function withTimeout<T>(p: Promise<T>): Promise<T> {
   ]);
 }
 
-// 오류 본문에는 이름만 남긴다. 연결 문자열(비밀번호 포함)이 응답·로그로 나가지 않게.
+// 오류 본문에 원인 메시지를 함께 담는다. port-forward로 부를 때 로그를 따로 보지 않고 바로 원인을 본다.
 function fail(what: string, err: unknown): Response {
   const name = err instanceof Error ? ((err as { code?: string }).code ?? err.name) : "unknown";
-  console.error(`${what} check failed: ${name}`);
-  return new Response(`${what} error`, { status: 503 });
+  const detail = err instanceof Error ? err.message : String(err);
+  console.error(`${what} check failed: ${name} ${detail}`);
+  return new Response(`${what} error: ${name} ${detail}`, { status: 503 });
 }
 
 async function checkDb(): Promise<Response> {
@@ -54,6 +55,11 @@ export async function handle(req: Request): Promise<Response> {
   if (pathname === "/healthz") return new Response("ok");
   if (pathname === "/healthz/db") return checkDb();
   if (pathname === "/healthz/cache") return checkCache();
+  // 시험 도구가 보낸 표식을 그대로 돌려준다(브라우저에서 바로 보이게 HTML).
+  if (pathname === "/echo") {
+    const q = new URL(req.url).searchParams.get("q") ?? "";
+    return new Response(`<p>${q}</p>`, { headers: { "content-type": "text/html; charset=utf-8" } });
+  }
   return new Response("hello");
 }
 

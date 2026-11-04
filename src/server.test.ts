@@ -32,3 +32,9 @@ test("접속 실패는 503이고 비밀번호를 내보내지 않는다", async 
     expect(await res.text()).not.toContain("pw-should-not-leak");
   }
 });
+
+test("/echo는 q를 돌려준다", async () => {
+  const res = await handle(new Request("http://app/echo?q=ping"));
+  expect(res.status).toBe(200);
+  expect(await res.text()).toContain("ping");
+});
