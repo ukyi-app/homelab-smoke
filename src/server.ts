@@ -54,7 +54,7 @@ export async function handle(req: Request): Promise<Response> {
   if (pathname === "/healthz") return new Response("ok");
   if (pathname === "/healthz/db") return checkDb();
   if (pathname === "/healthz/cache") return checkCache();
-  return new Response("hello");
+  return new Response("hello from homelab-smoke");
 }
 
 if (import.meta.main) {

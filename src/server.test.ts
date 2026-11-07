@@ -15,6 +15,12 @@ test("/healthz는 200 ok", async () => {
   expect(await res.text()).toBe("ok");
 });
 
+test("/는 200 hello from homelab-smoke", async () => {
+  const res = await handle(new Request("http://app/"));
+  expect(res.status).toBe(200);
+  expect(await res.text()).toBe("hello from homelab-smoke");
+});
+
 test("연결 env가 없으면 503", async () => {
   delete process.env.DATABASE_URL;
   delete process.env.VALKEY_URL;
