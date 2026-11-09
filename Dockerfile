@@ -4,7 +4,7 @@
 # - test 단계가 있어야 한다. app-build가 --target test로 시험을 돌린다.
 # - 비root uid 65532(공유 차트의 runAsUser와 같다). 루트 파일시스템은 읽기 전용이고 쓰기는 /tmp만 된다.
 # 기반 이미지는 digest로 고정하고 Renovate가 올린다.
-FROM oven/bun:1.4.3-slim@sha256:14a223fa35747ec728bce300ef85888bc5f7958164d15bbba6a54b22b52a3288 AS deps
+FROM oven/bun:1.4.4-slim@sha256:1846adf22496bd711036aae8be147e57bdebbaea2e5264e3e0b5af1db187d9a4 AS deps
 WORKDIR /app
 COPY package.json bun.lock ./
 RUN bun install --frozen-lockfile --production
@@ -14,7 +14,7 @@ RUN bun install --frozen-lockfile
 COPY . .
 RUN bun test
 
-FROM oven/bun:1.4.3-distroless@sha256:1aaa515018b0b37d95dbdebd55d1b7f37ad258a6289ba63e4bc3b9c9e3038697
+FROM oven/bun:1.4.4-distroless@sha256:153a951ae40106e125898103e6e990ee0f38e6aee7f561029e26cf9fbed23470
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY package.json ./
